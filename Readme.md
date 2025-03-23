@@ -110,3 +110,31 @@ graph TD;
     Backend-->AuthService[JWT + Firebase Auth]
 
 ```
+
+## 📸 Screenshots
+
+### Home Page & Ride Listing
+
+| Home Page                                                 | Ride Listing                                                      |
+| --------------------------------------------------------- | ----------------------------------------------------------------- |
+| ![Home](screenshots/Screenshot%202025-03-23%20081148.png) | ![Ride Listing](screenshots/Screenshot%202025-03-23%20145338.png) |
+
+### Ride Details & User Profile
+
+| Ride Details                                                      | User Profile                                                      |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| ![Ride Details](screenshots/Screenshot%202025-03-23%20145357.png) | ![User Profile](screenshots/Screenshot%202025-03-23%20145425.png) |
+
+### Chat Inbox & Message View
+
+| Chat Inbox                                                      | Message View                                                      |
+| --------------------------------------------------------------- | ----------------------------------------------------------------- |
+| ![Chat Inbox](screenshots/Screenshot%202025-03-23%20145437.png) | ![Message View](screenshots/Screenshot%202025-03-23%20145452.png) |
+
+### Booking Confirmation & Payment Page
+
+| Booking Confirmation                                         | Payment Page                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![Booking](screenshots/Screenshot%202025-03-23%20145504.png) | ![Payment](screenshots/Screenshot%202025-03-23%20145522.png) |
+
+📌 **More screenshots are available in the [`screenshots/`](screenshots/) folder.**
