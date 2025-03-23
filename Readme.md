@@ -101,7 +101,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 
 ## 📐 System Architecture Overview
 
-```mermaid
+````mermaid
 graph TD;
     User-->Frontend[React.js]
     Frontend-->Backend[Node.js + Express.js]
@@ -111,3 +111,14 @@ graph TD;
 
 
 ```
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```sh
+git clone https://github.com/KumarRoushan9234/car_polling_MoveINSync.git
+cd car_polling_MoveINSync
+````
+
+### 2️⃣ Install Dependencies
