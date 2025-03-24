@@ -65,7 +65,7 @@ const CreateRide = () => {
       toast.loading("Creating ride...");
 
       const res = await axios.post(
-        "https://carpooll-backend.onrender.com/api/rides/create",
+        "http://localhost:5000/api/rides/create",
         formData,
         {
           withCredentials: true,

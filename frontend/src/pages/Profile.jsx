@@ -43,7 +43,7 @@ const ProfilePage = () => {
 
     try {
       const response = await axios.post(
-        "https://carpooll-backend.onrender.com/api/auth/forgot-password",
+        "http://localhost:5000/api/auth/forgot-password",
         { email }
       );
       setResetMessage(response.data.message);

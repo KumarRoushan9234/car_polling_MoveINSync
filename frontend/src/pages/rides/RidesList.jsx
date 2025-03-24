@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import api from "../../util/api";
 import { toast } from "react-hot-toast";
-import SearchBar from "../../components/home/SearchBar";
+import SearchBar from "../../components/ride/SearchBar";
 import RideCard from "../../components/ride/RideCard";
 import Filters from "../../components/ride/Filters";
 
@@ -37,10 +37,8 @@ const RidesList = () => {
     try {
       let res;
       if (!searchData) {
-        
         res = await api.get("/rides");
       } else {
-        
         res = await api.get("/rides/search", {
           params: {
             leavingCoords: searchData.leavingCoords,
@@ -62,13 +60,11 @@ const RidesList = () => {
 
   return (
     <div className="max-w-7xl mx-auto text-black">
-      
       <div className="sticky top-0 bg-white z-10 p-6 shadow-md">
         <SearchBar />
       </div>
 
       <div className="flex gap-6 mt-4">
-        
         <div className="w-2/5">
           <Filters filters={filters} setFilters={setFilters} />
         </div>

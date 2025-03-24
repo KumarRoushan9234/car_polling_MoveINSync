@@ -97,7 +97,6 @@ const Driver = () => {
     <div className="p-6 max-w-6xl mx-auto text-gray-950">
       <h2 className="text-3xl font-bold mb-4">Driver's Ride Details</h2>
 
-      {/* Ride Info */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -138,7 +137,6 @@ const Driver = () => {
         </div>
       </motion.div>
 
-      {/* Passenger Requests */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -234,7 +232,6 @@ const Driver = () => {
         )}
       </motion.div>
 
-      {/* Actions */}
       <div className="mt-6 flex justify-center space-x-4">
         <motion.button
           whileHover={{ scale: 1.05 }}

@@ -28,7 +28,6 @@ const YourRides = () => {
         </button>
       </div>
 
-      {/* Render the respective component based on the user role */}
       {isDriver ? <DriverRides /> : <PassengerRides />}
     </div>
   );

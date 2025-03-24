@@ -8,25 +8,22 @@ import { IoMdTime } from "react-icons/io";
 import { useAuthStore } from "../../../store/authStore";
 
 const RideCard = ({ ride }) => {
-  const { authUser } = useAuthStore((state) => state); // Access current authenticated user
-
+  const { authUser } = useAuthStore((state) => state);
   if (!ride?._id) {
     console.error("Ride ID (_id) is missing for this ride:", ride);
     return null;
   }
 
-  // Check if the authenticated user is the driver or a passenger
   const isDriver = authUser?._id === ride.driver?._id;
   const isPassenger = ride.passengers?.some(
     (passenger) => passenger._id === authUser?._id
   );
 
-  // Determine the route based on the user role
   const redirectTo = isDriver
     ? `/driver-page/${ride._id}` // Redirect driver to driver page
     : isPassenger
     ? `/passenger-page/${ride._id}` // Redirect passenger to passenger page
-    : `/rides/${ride._id}`; // Default redirect to ride details
+    : `/rides/${ride._id}`;
 
   return (
     <motion.div
@@ -42,7 +39,6 @@ const RideCard = ({ ride }) => {
                    flex items-center justify-between transition-all duration-300 
                    hover:shadow-lg hover:border-green-400"
       >
-        {/* Left - Driver Info */}
         <div className="flex flex-col items-center w-24">
           <FaUser className="text-green-600 text-4xl mb-2" />
           <span className="text-sm font-semibold text-center text-gray-900">
@@ -50,7 +46,6 @@ const RideCard = ({ ride }) => {
           </span>
         </div>
 
-        {/* Middle - Route */}
         <div className="flex flex-col items-center flex-1 px-4">
           <div className="flex items-center space-x-2">
             <FaMapMarkerAlt className="text-blue-600 text-lg" />
@@ -67,7 +62,6 @@ const RideCard = ({ ride }) => {
           </div>
         </div>
 
-        {/* Right - Ride Details */}
         <div className="text-gray-900 flex flex-col items-center space-y-1">
           <div className="flex items-center">
             <FaCar className="mr-2 text-green-600" />

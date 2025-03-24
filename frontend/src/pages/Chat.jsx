@@ -26,7 +26,7 @@ const Chat = () => {
       try {
         console.log("Fetching messages...");
         const res = await axios.get(
-          `https://carpooll-backend.onrender.com/api/messages/${receiverId}`,
+          `http://localhost:5000/api/messages/${receiverId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -43,7 +43,7 @@ const Chat = () => {
       try {
         console.log("Fetching receiver info...");
         const res = await axios.get(
-          `https://carpooll-backend.onrender.com/api/auth/profile/${receiverId}`,
+          `http://localhost:5000/api/auth/profile/${receiverId}`,
           {
             withCredentials: true,
           }
@@ -69,7 +69,7 @@ const Chat = () => {
       console.log("Sending new message:", newMessage);
 
       const res = await axios.post(
-        "https://carpooll-backend.onrender.com/api/messages/send",
+        "http://localhost:5000/api/messages/send",
         { receiver: receiverId, content: newMessage },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );

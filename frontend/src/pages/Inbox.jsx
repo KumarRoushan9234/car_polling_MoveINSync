@@ -14,12 +14,9 @@ const Inbox = () => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const res = await axios.get(
-          "https://carpooll-backend.onrender.com/api/messages",
-          {
-            withCredentials: true,
-          }
-        );
+        const res = await axios.get("http://localhost:5000/api/messages", {
+          withCredentials: true,
+        });
         setConversations(res.data.conversations);
       } catch (err) {
         console.error(
