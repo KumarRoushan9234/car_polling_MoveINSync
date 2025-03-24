@@ -14,15 +14,29 @@ const app = express();
 app.use(express.json()); 
 app.use(cookieParser());
 
-// app.use(cors());
+// app.use(cors()); //=> all
 
 const corsOptions = {
-  origin: 'http://localhost:5173', 
+  origin: [
+    'http://localhost:5173', 
+    'https://carma-carpool.vercel.app',
+    'https://carma-carpool-5qilz441o-kumar-roushans-projects.vercel.app',
+    'https://carma-carpool-git-main-kumar-roushans-projects.vercel.app'
+  ],
   credentials: true, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions)); // <-- Handle Preflight Requests
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 
 connectDB();

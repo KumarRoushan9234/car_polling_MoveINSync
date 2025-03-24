@@ -37,10 +37,10 @@ const RidesList = () => {
     try {
       let res;
       if (!searchData) {
-        // Fetch all rides if no search data is provided
+        
         res = await api.get("/rides");
       } else {
-        // Fetch rides based on search parameters
+        
         res = await api.get("/rides/search", {
           params: {
             leavingCoords: searchData.leavingCoords,
@@ -62,18 +62,17 @@ const RidesList = () => {
 
   return (
     <div className="max-w-7xl mx-auto text-black">
-      {/* Fixed Top Section */}
+      
       <div className="sticky top-0 bg-white z-10 p-6 shadow-md">
         <SearchBar />
       </div>
 
       <div className="flex gap-6 mt-4">
-        {/* Left Sidebar (Filters) */}
+        
         <div className="w-2/5">
           <Filters filters={filters} setFilters={setFilters} />
         </div>
 
-        {/* Right Content (Rides List) */}
         <div className="w-3/5 h-[70vh] overflow-y-auto pr-2 pb-10">
           <h2 className="text-2xl font-bold mb-4">Available Rides</h2>
 

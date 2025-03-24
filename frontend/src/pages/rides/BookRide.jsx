@@ -41,12 +41,10 @@ const BookRide = () => {
       const res = await api.post(`/rides/${id}/join`, bookingData);
       toast.success(res.data.message);
 
-      // Navigate to ride details page if successful
       navigate(`/rides/${id}`);
     } catch (error) {
       toast.error(`Booking failed. Please try again. ${error}`);
 
-      // Navigate to all rides page if unsuccessful
       navigate("/rides");
     }
   };
@@ -58,7 +56,6 @@ const BookRide = () => {
   return (
     <div className="max-w-7xl mx-auto p-8 space-y-8">
       <div className="flex justify-between gap-8">
-        {/* Ride Details */}
         <div className="w-2/3 bg-white p-6 rounded-xl shadow-xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Ride Details
@@ -104,7 +101,6 @@ const BookRide = () => {
               </div>
             </div>
 
-            {/* Fare Range */}
             <div className="flex items-center space-x-3 mt-6">
               <MdMoneyOff className="text-gray-500 text-xl" />
               <span className="font-semibold text-gray-700">Fare Range:</span>
@@ -127,7 +123,6 @@ const BookRide = () => {
           </div>
         </div>
 
-        {/* Driver Details */}
         <div className="w-1/3 bg-white p-6 rounded-xl shadow-xl">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Driver Details
@@ -162,13 +157,11 @@ const BookRide = () => {
         </div>
       </div>
 
-      {/* Booking Form */}
       <div className="bg-white p-8 rounded-xl shadow-xl">
         <h3 className="text-xl font-semibold text-gray-800 mb-6">
           Your Booking
         </h3>
 
-        {/* Number of Passengers (Counter) */}
         <div className="flex items-center space-x-3 mb-6">
           <label className="font-semibold text-gray-700">
             Number of Passengers:
@@ -194,7 +187,6 @@ const BookRide = () => {
           </div>
         </div>
 
-        {/* Payment Method */}
         <div className="flex items-center space-x-3 mb-6">
           <label className="font-semibold text-gray-700">
             Preferred Payment Method:
@@ -210,7 +202,6 @@ const BookRide = () => {
           </select>
         </div>
 
-        {/* Message Box */}
         <div className="mb-6">
           <label className="font-semibold text-gray-700 ">
             Message to Driver:
@@ -224,7 +215,6 @@ const BookRide = () => {
           />
         </div>
 
-        {/* Request Book Button */}
         <button
           onClick={handleSubmit}
           className="w-full py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"

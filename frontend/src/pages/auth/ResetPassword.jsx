@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/reset-password",
+        "https://carpooll-backend.onrender.com/api/auth/reset-password",
         {
           token,
           newPassword,

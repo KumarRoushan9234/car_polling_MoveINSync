@@ -22,7 +22,7 @@ export const useAuthStore = create(
       checkAuth: async () => {
         try {
           const res = await api.get("/auth/check-auth");
-          console.log("check-Auth : ",res.data.data);
+          console.log("check-Auth : ",res.data);
           if (res.data.data) {
             set({ authUser: res.data.data });
             console.log("auth sucess");
@@ -35,7 +35,6 @@ export const useAuthStore = create(
           set({ isCheckingAuth: false });
         }
       },
-
 
       login: async (formData) => {
         set({ isLoggingIn: true });

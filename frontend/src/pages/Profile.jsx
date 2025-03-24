@@ -43,7 +43,7 @@ const ProfilePage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://carpooll-backend.onrender.com/api/auth/forgot-password",
         { email }
       );
       setResetMessage(response.data.message);
@@ -69,7 +69,6 @@ const ProfilePage = () => {
         Your Profile
       </h2>
 
-      {/* Profile Info */}
       <div className="profile-info mb-8 flex items-center space-x-6">
         <div className="profile-details flex flex-col justify-center">
           <h3 className="text-2xl font-semibold text-gray-800">
@@ -92,7 +91,6 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Additional Information */}
       <div className="additional-info mb-8 text-stone-900">
         <motion.h4
           className="text-xl font-semibold mb-2"
@@ -124,7 +122,6 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Update Profile */}
       <div className="update-profile mb-8">
         <h4 className="text-lg font-semibold mb-2 text-stone-900">
           Update Profile
@@ -146,7 +143,6 @@ const ProfilePage = () => {
         </motion.button>
       </div>
 
-      {/* Forgot Password Section */}
       <div className="forgot-password mb-8">
         <h4 className="text-lg font-semibold mb-2 text-stone-900">
           Forgot Password
@@ -171,7 +167,6 @@ const ProfilePage = () => {
         {resetError && <p className="text-red-600 mt-2">{resetError}</p>}
       </div>
 
-      {/* Reset Password Section */}
       <div className="reset-password mb-6">
         <h4 className="text-lg font-semibold mb-2 text-stone-900">
           Reset Password

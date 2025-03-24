@@ -14,7 +14,7 @@ const Others_Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/auth/profile/${id}`
+          `https://carpooll-backend.onrender.com/api/auth/profile/${id}`
         );
         setUser(response.data.data);
       } catch (err) {

@@ -58,7 +58,6 @@ const VerifyEmail = () => {
     setIsOtpExpired(false);
   };
 
-  // MM:SS
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;

@@ -10,11 +10,11 @@ const Chat = () => {
   const { authUser, token } = useAuthStore();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [receiver, setReceiver] = useState(null); // Store receiver's info
+  const [receiver, setReceiver] = useState(null);
 
-  console.log("🔍 receiverId from route params:", receiverId);
-  console.log("🔍 Authenticated User:", authUser);
-  console.log("🔍 Token:", token);
+  console.log("receiverId from route params:", receiverId);
+  console.log("Authenticated User:", authUser);
+  console.log("Token:", token);
 
   useEffect(() => {
     if (!receiverId) {
@@ -24,9 +24,9 @@ const Chat = () => {
 
     const fetchMessages = async () => {
       try {
-        console.log("📤 Fetching messages...");
+        console.log("Fetching messages...");
         const res = await axios.get(
-          `http://localhost:5000/api/messages/${receiverId}`,
+          `https://carpooll-backend.onrender.com/api/messages/${receiverId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -41,9 +41,9 @@ const Chat = () => {
 
     const fetchReceiverInfo = async () => {
       try {
-        console.log("📤 Fetching receiver info...");
+        console.log("Fetching receiver info...");
         const res = await axios.get(
-          `http://localhost:5000/api/auth/profile/${receiverId}`,
+          `https://carpooll-backend.onrender.com/api/auth/profile/${receiverId}`,
           {
             withCredentials: true,
           }
@@ -52,7 +52,7 @@ const Chat = () => {
         setReceiver(res.data.data);
       } catch (err) {
         console.error(
-          "❌ Error fetching receiver info:",
+          "Error fetching receiver info:",
           err.response?.data || err
         );
       }
@@ -66,19 +66,19 @@ const Chat = () => {
     if (!newMessage.trim()) return;
 
     try {
-      console.log("📤 Sending new message:", newMessage);
+      console.log("Sending new message:", newMessage);
 
       const res = await axios.post(
-        "http://localhost:5000/api/messages/send",
+        "https://carpooll-backend.onrender.com/api/messages/send",
         { receiver: receiverId, content: newMessage },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
 
-      console.log("✅ Message sent successfully:", res.data);
+      console.log("Message sent successfully:", res.data);
       setMessages([...messages, res.data.data]);
       setNewMessage("");
     } catch (err) {
-      console.error("❌ Error sending message:", err.response?.data || err);
+      console.error("Error sending message:", err.response?.data || err);
     }
   };
 
@@ -90,7 +90,6 @@ const Chat = () => {
 
   return (
     <div className="h-screen bg-[#EAF8E6] text-gray-900 flex flex-col">
-      {/* Header with Receiver Name */}
       <div className="flex justify-between items-center bg-white p-4 shadow-md">
         <h2 className="text-2xl font-bold">Your Messages</h2>
         {receiver ? (
@@ -113,7 +112,6 @@ const Chat = () => {
         )}
       </div>
 
-      {/* Messages List */}
       <div className="flex-1 overflow-y-auto px-6 pb-20 mt-5">
         {messages.length === 0 ? (
           <motion.div
@@ -175,7 +173,6 @@ const Chat = () => {
         )}
       </div>
 
-      {/* Fixed Input Box */}
       <div className="sticky bottom-0 left-0 w-full bg-white p-4 shadow-md flex">
         <input
           type="text"
