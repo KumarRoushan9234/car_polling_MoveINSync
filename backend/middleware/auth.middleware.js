@@ -6,10 +6,10 @@ export const protectRoute = async(req,res,next) => {
   try{
 
     console.log("Checking Authentication...");
-    console.log("🔑 Cookies received:", req.cookies);
+    console.log("Cookies received:", req.cookies);
 
     let token = req.cookies?.jwt;
-    console.log("🔑 Token from Cookie:", token);
+    console.log("Token from Cookie:", token);
 
     if (!token && req.headers.authorization?.startsWith("Bearer")) {
       token = req.headers.authorization.split(" ")[1];
