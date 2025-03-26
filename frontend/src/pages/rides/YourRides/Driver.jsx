@@ -14,12 +14,24 @@ const Driver = () => {
   useEffect(() => {
     const fetchRideDetails = async () => {
       try {
+        // const res = await axios.get(
+        //   `http://localhost:5000/api/rides/${id}/passengers`,
+        //   {
+        //     withCredentials: true,
+        //   }
+        // );
+        // console.log("messages : ", res);
+
         const response = await axios.get(
-          `http://localhost:5000/api/rides/${id}/passengers`,
-          { withCredentials: true }
+          `http://localhost:5000/api/rides/${id}`,
+          {
+            withCredentials: true,
+          }
         );
-        setRideDetails(response.data.rideDetails);
-        setRequests(response.data.rideDetails.passengers);
+        console.log("ride-details : ", response);
+
+        setRideDetails(response.data.data);
+        setRequests(response.data.data.passengers);
       } catch (error) {
         toast.error("Error fetching ride details.");
       } finally {
@@ -31,19 +43,25 @@ const Driver = () => {
 
   const handleRequestResponse = async (passengerId, status) => {
     try {
-      await axios.put(
+      const res = await axios.put(
         `http://localhost:5000/api/rides/${id}/respond`,
         { passengerId, status },
         { withCredentials: true }
       );
-      toast.success(
-        `Request ${status === "accepted" ? "approved" : "declined"}`
-      );
+
+      console.log(res);
       setRequests((prevRequests) =>
         prevRequests.map((request) =>
           request._id === passengerId ? { ...request, status } : request
         )
       );
+      if (res.data.success == true) {
+        toast.success(
+          `Request ${status === "accepted" ? "approved" : "declined"}`
+        );
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       toast.error("Failed to respond to request.");
     }
@@ -51,11 +69,14 @@ const Driver = () => {
 
   const handleCloseRide = async () => {
     try {
-      await axios.put(
+      const res = await axios.post(
         `http://localhost:5000/api/rides/${id}/close`,
         {},
         { withCredentials: true }
       );
+
+      console.log(res);
+
       toast.success("Ride closed for new bookings.");
       navigate("/rides");
     } catch (error) {
@@ -65,11 +86,14 @@ const Driver = () => {
 
   const handleEndRide = async () => {
     try {
-      await axios.post(
+      const res = await axios.post(
         `http://localhost:5000/api/rides/${id}/complete`,
         {},
         { withCredentials: true }
       );
+
+      console.log(res);
+
       toast.success("Ride completed!");
       navigate("/rides");
     } catch (error) {
@@ -103,21 +127,14 @@ const Driver = () => {
         transition={{ duration: 0.5 }}
         className="bg-green-100 p-6 rounded-lg shadow-md mb-6"
       >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold">Ride Information</h3>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleCloseRide}
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg transition hover:bg-gray-700"
-          >
-            Close Ride
-          </motion.button>
-        </div>
+        <h3 className="text-xl font-semibold mb-4">Ride Information</h3>
         <div className="space-y-4">
           <p>
             <strong>Driver:</strong> {rideDetails.driver.name} (
             {rideDetails.driver.email})
+          </p>
+          <p>
+            <strong>Status:</strong> {rideDetails.status}
           </p>
           <p>
             <strong>Vehicle:</strong> {rideDetails.vehicle.model} (
@@ -126,6 +143,9 @@ const Driver = () => {
           <p>
             <strong>Fare Range:</strong> ₹{rideDetails.fareRange.min} - ₹
             {rideDetails.fareRange.max}
+          </p>
+          <p>
+            <strong>Available Seats:</strong> {rideDetails.availableSeats}
           </p>
           <p>
             <strong>Available Seats:</strong> {rideDetails.availableSeats}
@@ -141,9 +161,9 @@ const Driver = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-green-100 p-6 rounded-lg shadow-md"
+        className="bg-green-100 p-6 rounded-lg shadow-md mb-6"
       >
-        <h3 className="text-xl font-semibold mb-4">Ride Requests</h3>
+        <h3 className="text-xl font-semibold mb-4">Passengers</h3>
         {requests.length > 0 ? (
           requests.map((request) => (
             <motion.div
@@ -156,11 +176,20 @@ const Driver = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p>
-                    <strong>Passenger:</strong> {request.user.name} (
-                    {request.user.email})
+                    <strong>Name:</strong>{" "}
+                    {request.user?.name?.trim() || "Rider"}
                   </p>
                   <p>
+                    <strong>Email:</strong>{" "}
+                    {request.user?.email?.trim() || "Not Provided"}
+                  </p>
+
+                  <p>
                     <strong>Seats Requested:</strong> {request.numPassengers}
+                  </p>
+
+                  <p>
+                    <strong>Status : </strong> {request.status}
                   </p>
                   <p>
                     <strong>Due Payment:</strong> ₹{request.duePayment}
@@ -202,28 +231,31 @@ const Driver = () => {
                     </li>
                   </ul>
                 </div>
-                <div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() =>
-                      handleRequestResponse(request._id, "accepted")
-                    }
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg mr-2 transition hover:bg-green-700"
-                  >
-                    Accept
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() =>
-                      handleRequestResponse(request._id, "rejected")
-                    }
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg transition hover:bg-red-700"
-                  >
-                    Reject
-                  </motion.button>
-                </div>
+                {request.status === "pending" &&
+                  rideDetails.availableSeats > 0 && (
+                    <div>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() =>
+                          handleRequestResponse(request._id, "accepted")
+                        }
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg mr-2 transition hover:bg-green-700"
+                      >
+                        Accept
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() =>
+                          handleRequestResponse(request._id, "rejected")
+                        }
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg transition hover:bg-red-700"
+                      >
+                        Reject
+                      </motion.button>
+                    </div>
+                  )}
               </div>
             </motion.div>
           ))
@@ -232,7 +264,16 @@ const Driver = () => {
         )}
       </motion.div>
 
+      {/* Action Buttons */}
       <div className="mt-6 flex justify-center space-x-4">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleCloseRide}
+          className="bg-gray-600 text-white px-6 py-3 rounded-lg transition hover:bg-gray-700"
+        >
+          Close Ride
+        </motion.button>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -241,14 +282,14 @@ const Driver = () => {
         >
           End Ride
         </motion.button>
-        <motion.button
+        {/* <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleDeleteRide}
           className="bg-red-600 text-white px-6 py-3 rounded-lg transition hover:bg-red-700"
         >
           Delete Ride
-        </motion.button>
+        </motion.button> */}
       </div>
     </div>
   );

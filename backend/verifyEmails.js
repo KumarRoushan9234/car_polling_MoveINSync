@@ -10,8 +10,8 @@ const verifyAllEmails = async () => {
 
     const result = await User.updateMany({}, { 
       $set: { 
-        isemailVerified: true,   // Correct field name
-        isphoneVerified: true    // Correct field name
+        isemailVerified: true,   
+        isphoneVerified: true    
       } 
     });
 

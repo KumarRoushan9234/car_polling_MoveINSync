@@ -21,13 +21,14 @@ const RideDetails = () => {
   const { authUser } = useAuthStore((state) => state);
   const [ride, setRide] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isRedirecting, setIsRedirecting] = useState(false); 
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRideDetails = async () => {
       try {
         const res = await api.get(`/rides/${id}`);
+        console.log("ride details : ", res.data.data);
         setRide(res.data.data);
       } catch (error) {
         toast.error("Failed to fetch ride details.");
@@ -38,6 +39,19 @@ const RideDetails = () => {
 
     fetchRideDetails();
   }, [id]);
+
+  const handleLeaveRide = async () => {
+    try {
+      // http://localhost:5000/api/rides/67dcbac1a928114d9414d777/leave
+      const res = await api.put(`/rides/${id}/leave`, {
+        withCredentials: true,
+      });
+      toast.success("Left Ride  successfully.");
+      navigate("/rides");
+    } catch (error) {
+      toast.error("Failed to Leave the ride.");
+    }
+  };
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
   if (!ride) return <p className="text-center text-red-500">Ride not found.</p>;
@@ -64,15 +78,15 @@ const RideDetails = () => {
   };
 
   const isDriver = authUser?._id === ride.driver?._id;
+  console.log("user_Id", authUser?._id);
+  console.log("ispassenger", ride.passengers);
   const isPassenger = ride.passengers?.some(
-    (passenger) => passenger._id === authUser?._id
+    (passenger) => passenger.user === authUser?._id
   );
 
   return (
     <div className="max-w-5xl mx-auto p-6 text-black flex gap-6">
-
       <div className="w-3/5 space-y-6">
-
         <div className="bg-white p-4 border rounded-lg shadow-md flex items-center space-x-3">
           <BsCalendarDate className="text-blue-600 text-2xl" />
           <span className="text-lg font-bold">
@@ -170,18 +184,28 @@ const RideDetails = () => {
       </div>
 
       <div className="w-2/5 flex flex-col items-center">
-
         {isDriver ? (
           <p className="bg-green-500 text-white p-2 rounded-md">
             Ride created by you
           </p>
         ) : isPassenger ? (
-          <p className="bg-blue-500 text-white p-2 rounded-md">
-            You have joined the ride
-          </p>
-        ) : null}
+          <div className="w-full text-center">
+            {/* Show Passenger's Ride Status */}
+            <p className="bg-blue-500 text-white p-2 rounded-md">
+              You have joined the ride (
+              {ride.passengers.find((p) => p.user === authUser?._id)?.status})
+            </p>
 
-        {!isDriver && !isPassenger && (
+            {/* Cancel Ride Button */}
+            <button
+              className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md mt-3 hover:bg-red-700"
+              onClick={handleLeaveRide}
+            >
+              Leave Ride
+            </button>
+          </div>
+        ) : (
+          // Default "Book a Pool" Button for non-passengers
           <Link
             to={`/book-a-pool/${id}`}
             className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md flex items-center space-x-2 hover:bg-orange-600"
@@ -191,6 +215,7 @@ const RideDetails = () => {
           </Link>
         )}
 
+        {/* Cost & Time Card */}
         <div className="bg-white p-6 border rounded-lg shadow-md mt-6 text-center">
           <h3 className="text-3xl font-bold text-gray-800">
             ₹{ride.fareRange?.min} - ₹{ride.fareRange?.max}
@@ -202,6 +227,18 @@ const RideDetails = () => {
             {ride.availableSeats} Seats Left
           </p>
         </div>
+
+        {/* Show Emergency & Share Ride Button only for passengers */}
+        {isPassenger && (
+          <div className="flex flex-col space-y-3 w-full mt-4">
+            <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+              🚨 Contact Emergency
+            </button>
+            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900">
+              🔗 Share Ride
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

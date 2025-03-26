@@ -21,9 +21,9 @@ const RideCard = ({ ride }) => {
 
   const redirectTo = isDriver
     ? `/driver-page/${ride._id}` // Redirect driver to driver page
-    : isPassenger
-    ? `/passenger-page/${ride._id}` // Redirect passenger to passenger page
-    : `/rides/${ride._id}`;
+    : // : isPassenger
+      // ? `/passenger-page/${ride._id}` // Redirect passenger to passenger page
+      `/rides/${ride._id}`;
 
   return (
     <motion.div

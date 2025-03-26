@@ -110,10 +110,9 @@ const SearchBar = ({ onSearch }) => {
       numPassengers: passengerCount,
     };
 
-    console.log("Navigating to /rides with:", searchParams);
-
-    // Corrected navigate function
-    navigate(`/rides`, { state: searchParams });
+    console.log("Triggering search with:", searchParams);
+    // onSearch(searchParams);
+    navigate("/rides", { state: searchParams });
   };
 
   useEffect(() => {

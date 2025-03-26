@@ -18,6 +18,7 @@ router.put("/:id", protectRoute, updateRide);
 router.get("/:id/passengers", protectRoute, getPassengersForRide);
 router.put("/:id/respond", protectRoute, respondToRideRequest); 
 router.delete("/:id", protectRoute, cancelRide);
+
 router.post("/:id/complete", protectRoute, completeRide); 
 
 router.post("/:id/close", protectRoute, closeRide); // => done

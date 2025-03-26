@@ -16,12 +16,16 @@ const Filters = ({ filters, setFilters }) => {
     }));
   };
 
-  // Example of preferences array
   const preferences = [
-    { key: "smoking", label: "Smoking" },
-    { key: "pets", label: "Pets Allowed" },
+    { key: "smokingAllowed", label: "Smoking Allowed" },
     { key: "music", label: "Music" },
-    // Add more preferences as needed
+    { key: "petsAllowed", label: "Pets Allowed" },
+    { key: "femaleOnly", label: "Female Only" },
+    { key: "chattyDriver", label: "Chatty Driver" },
+    { key: "quietRide", label: "Quiet Ride" },
+    { key: "airConditioning", label: "Air Conditioning" },
+    { key: "luggageSpace", label: "Luggage Space" },
+    { key: "windowSeatPreferred", label: "Window Seat Preferred" },
   ];
 
   return (
@@ -31,20 +35,20 @@ const Filters = ({ filters, setFilters }) => {
       {/* Payment Slider */}
       <div className="mb-4">
         <label className="text-sm font-semibold">
-          Max Payment: ₹{filters.maxPayment || 500}
+          Max Payment: ₹{filters.maxPayment}
         </label>
         <input
           type="range"
           min="0"
           max="1000"
           step="50"
-          value={filters.maxPayment || 500}
+          value={filters.maxPayment}
           onChange={handleSliderChange}
           className="w-full mt-2"
         />
       </div>
 
-      {/* Preferences Filters */}
+      {/* Preferences */}
       <div className="grid grid-cols-2 gap-2 text-sm">
         {preferences.map(({ key, label }) => (
           <label key={key} className="flex items-center gap-2 cursor-pointer">

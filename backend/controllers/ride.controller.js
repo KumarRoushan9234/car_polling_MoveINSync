@@ -174,13 +174,10 @@ export const createRide = async (req, res) => {
   }
 };
 
-
-
-
 // ---------------------ok GET ALL AVAILABLE RIDES ---------------------
 export const getAllRides = async (req, res) => {
   try {
-    const { pickup, drop } = req.query; // Optional filters
+    const { pickup, drop } = req.query; 
 
     let query = { status: "active" };
 
@@ -271,7 +268,6 @@ export const getRideById = async (req, res) => {
   }
 };
 
-
 // ---------------------ok UPDATE A RIDE (ONLY DRIVER) email---------------------
 export const updateRide = async (req, res) => {
   try {
@@ -346,25 +342,31 @@ export const updateRide = async (req, res) => {
 // ---------------------ok JOIN A RIDE (AS A RIDER) email---------------------
 export const requestJoinRide = async (req, res) => {
   try {
+    console.log("joining ride");
     console.log(req.body);
     const { numPassengers, offeredFare, preferredPaymentMethod } = req.body;
 
     const ride = await Ride.findById(req.params.id);
     const user = await User.findById(req.user._id);
 
-    console.log(ride);
-    if (!user.isphoneVerified) {
-      return res.status(403).json({
-        message: "Phone number must be verified to join a ride.",
-        success: false,
-      });
-    }
+    // console.log("ride : ",ride);
+    // console.log("user : ",user);
+
+    // if (!user.isphoneVerified) {
+    //   return res.status(403).json({
+    //     message: "Phone number must be verified to join a ride.",
+    //     success: false,
+    //   });
+    // }
 
     if (!ride){
       return res.status(404).json({ 
         message: "Ride not found", 
         success: false });
     } 
+
+
+    console.log("checking avail");
 
     if (ride.availableSeats < numPassengers){ 
       return res.status(400).json({ 
@@ -373,7 +375,9 @@ export const requestJoinRide = async (req, res) => {
       });
     }
 
-    console.log('Ride:', ride);
+    console.log("checking avail");
+
+    // console.log('Ride:', ride);
     console.log('Available seats:', ride.availableSeats);
 
     if (ride.status == "closed"){ 
@@ -383,15 +387,18 @@ export const requestJoinRide = async (req, res) => {
       });
     }
 
-    // Validate fare within range 
-    if (offeredFare < ride.fareRange.min || offeredFare > ride.fareRange.max) {
-      return res.status(400).json({ 
-        message: `Fare must be between ${ride.fareRange.min} and ${ride.fareRange.max}.`,
-        success: false 
-      });
-    }
+    console.log("checking fair");
+    
+    // if (offeredFare < ride.fareRange.min || offeredFare > ride.fareRange.max) {
+    //   return res.status(400).json({ 
+    //     message: `Fare must be between ${ride.fareRange.min} and ${ride.fareRange.max}.`,
+    //     success: false 
+    //   });
+    // }
 
-    // Check if user is already in the ride
+    console.log(offeredFare);
+    console.log("checking user already in ride");
+    
     const existingPassenger = ride.passengers.find(p => p.user.toString() === req.user._id.toString());
     if (existingPassenger) {
       return res.status(400).json({
@@ -481,9 +488,12 @@ export const getPassengersForRide = async (req, res) => {
 // ---------------------ok DRIVER ACCEPTS/REJECTS A RIDE REQUEST ok---------------------
 export const respondToRideRequest = async (req, res) => {
   try {
+    console.log("repond to request");
     const { passengerId, status } = req.body;
     const ride = await Ride.findById(req.params.id);
 
+    console.log("Received Request for Ride ID:", req.params.id);
+    
     if(!ride){
       return res.status(404).json({
         message: "Ride not found",
@@ -491,43 +501,41 @@ export const respondToRideRequest = async (req, res) => {
       });
     } 
 
-    if(ride.driver.toString() !== req.user._id.toString()){
+    // console.log("request : ",req);
+    // console.log("req.user:", req.user);
+    console.log("req.body : ",req.body);
+    console.log("ride : ",ride);
+    console.log("req.user._id : ",req.user._id);
+
+    if (ride.driver.toString() !== req.user._id.toString()) {
       return res.status(403).json({ 
         message: "Unauthorized action.", 
         success: false 
       });
     }
 
-    // const passenger = ride.passengers.find(p => p.user.toString() === passengerId);
+    console.log("Checking passengerId:", passengerId);
+    console.log("Available passengers:", ride.passengers.map(p => p._id.toString()));
 
-    // if (!passenger){
-    //   return res.status(404).json({ 
-    //     message: "Passenger not found", 
-    //     success: false 
-    //   });
-    // }
-    // passenger.status = status;
+    const passenger = ride.passengers.find(p => p._id.toString() === passengerId.toString());
 
-    const passengerIndex = ride.passengers.findIndex(p => p.user.toString() === passengerId);
-    if (passengerIndex === -1) {
+    console.log("Found Passenger:", passenger);
+
+    if (!passenger) {
+      console.log("Passenger not found");
       return res.status(404).json({ 
-        message: "Passenger not found in this ride.",
+        message: "Passenger not found", 
         success: false 
       });
     }
+    
+    console.log("checking satus");
+    passenger.status = status;
 
-    const passenger = ride.passengers[passengerIndex];
-
-    // Check if passenger is already approved
-    if (passenger.status === "accepted" && status === "accepted") {
-      return res.status(400).json({
-        message: "Passenger is already accepted.",
-        success: false,
-      });
-    }
-
+    console.log("avail");
     if(status === "accepted"){
       if(ride.availableSeats < passenger.numPassengers){
+        console.log("no seats left");
         return res.status(400).json({
           message: "Not enough seats available anymore.",
           success: false 
@@ -539,39 +547,17 @@ export const respondToRideRequest = async (req, res) => {
       passenger.status = "rejected";
     }
 
+    console.log("savong");
     await ride.save();
 
-    const user = await User.findById(passenger.user);
-    const driver = await User.findById(ride.driver);
-
-    if (status === "accepted") {
-      // Send full details of driver and rider to each other
-      await sendEmail(
-        user.email,
-        "Ride Request Accepted",
-        `Your ride request was accepted! Here are your driver details:\n\n
-         - Name: ${driver.name}
-         - Vehicle: ${ride.vehicle.model} (${ride.vehicle.color})
-         - Payment Method: ${ride.paymentPreferences.driver}
-         - Contact: ${driver.email}`
-      );
-
-      await sendEmail(
-        driver.email,
-        "Passenger Accepted",
-        `You have accepted ${user.name} into your ride. Here are their details:\n\n
-         - Name: ${user.name}
-         - Number of Seats: ${passenger.numPassengers}
-         - Preferred Payment: ${passenger.preferredPaymentMethod}
-         - Contact: ${user.email}`
-      );
-    }
+    console.log("further");
 
     return res.status(200).json({ 
       message: `Ride request ${status}`, 
       success: true 
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ 
       message: error.message, 
       success: false });
@@ -672,6 +658,7 @@ export const completeRide = async (req, res) => {
 // --------------------- CLOSE A RIDE ---------------------
 export const closeRide = async (req, res) => {
   try {
+    console.log("closeRide");
     const ride = await Ride.findById(req.params.id).populate("passengers.user");
 
     if(!ride){
@@ -680,6 +667,8 @@ export const closeRide = async (req, res) => {
         success: false 
       });
     } 
+
+    console.log("checking driver");
     if(ride.driver.toString() !== req.user._id.toString()){
       return res.status(403).json({ 
         message: "Unauthorized", 
@@ -691,13 +680,13 @@ export const closeRide = async (req, res) => {
     await ride.save();
 
     // Notify all passengers
-    for (const passenger of ride.passengers) {
-      await sendEmail(
-        passenger.user.email,
-        "Ride Closed",
-        `The ride from ${ride.pickupLocation} to ${ride.dropLocation} has been closed by the driver. No new passengers can join.`
-      );
-    }
+    // for (const passenger of ride.passengers) {
+    //   await sendEmail(
+    //     passenger.user.email,
+    //     "Ride Closed",
+    //     `The ride from ${ride.pickupLocation} to ${ride.dropLocation} has been closed by the driver. No new passengers can join.`
+    //   );
+    // }
 
     return res.status(200).json({ 
       message: "Ride closed successfully | no more passengers allowed", 
