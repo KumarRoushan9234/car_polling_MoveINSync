@@ -1,4 +1,4 @@
-# 🚗 Carpooling System - MoveINSync
+# Carpooling System - MoveINSync
 
 **A smart, privacy-focused ride-sharing platform**
 
@@ -12,32 +12,32 @@
 ## Introduction
 
 The **Carpooling System** helps drivers and passengers connect seamlessly. It is designed to:  
-✅ Reduce travel costs & congestion 🚦  
-✅ Lower environmental impact 🌍  
-✅ Ensure privacy, security, and smart ride-matching 🔒
+ Reduce travel costs & congestion 🚦  
+ Lower environmental impact 🌍  
+ Ensure privacy, security, and smart ride-matching 🔒
 
 ## 🛠 Technology Stack
 
 ### Frontend (React)
 
-- ⚛️ React.js (Tailwind CSS & DaisyUI)
-- 🎨 Framer Motion (smooth animations)
-- 📍 Google Maps API (location & route visualization)
+- React.js (Tailwind CSS & DaisyUI)
+- Framer Motion (smooth animations)
+- Google Maps API (location & route visualization)
 
 ### Backend (Node.js + Express)
 
-- 🛡 JWT-based authentication (Email & Firebase Phone verification)
-- 🔄 RESTful API with Node.js & Express.js
-- 💾 MongoDB with Mongoose
-- 🗺 Google Maps API (routes & recommendations)
+- JWT-based authentication (Email & Firebase Phone verification)
+- RESTful API with Node.js & Express.js
+- MongoDB with Mongoose
+- Google Maps API (routes & recommendations)
 
 ## 🔐 Privacy & Security Features
 
-✅ **MFA Authentication** → Email & Phone Verification Required  
-✅ **Phone Number Masking** → Hidden until ride confirmation  
-✅ **Emergency SOS Button** → Share ride details in real-time  
-✅ **Report User Feature** → Report inappropriate behavior  
-✅ **End-to-End Encrypted Messaging** → Secure in-app chat
+**MFA Authentication** → Email & Phone Verification Required  
+**Phone Number Masking** → Hidden until ride confirmation  
+**Emergency SOS Button** → Share ride details in real-time  
+**Report User Feature** → Report inappropriate behavior  
+**End-to-End Encrypted Messaging** → Secure in-app chat
 
 ## 📌 Core Functionalities
 
