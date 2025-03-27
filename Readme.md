@@ -111,7 +111,7 @@ graph TD;
 
 ```
 
-## 📸 Screenshots
+## Screenshots
 
 ### Home Page & Ride Listing
 
@@ -137,4 +137,4 @@ graph TD;
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ![Booking](screenshots/Screenshot%202025-03-23%20145504.png) | ![Payment](screenshots/Screenshot%202025-03-23%20145522.png) |
 
-📌 **More screenshots are available in the [`screenshots/`](screenshots/) folder.**
+**More screenshots are available in the [`screenshots/`](screenshots/) folder.**
