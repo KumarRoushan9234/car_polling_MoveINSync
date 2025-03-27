@@ -78,7 +78,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 ✅ **Per KM Charge** (varies by city)  
 ✅ **Traffic & Surge Pricing** (dynamic adjustments)
 
-## ⚡ System Resilience & Fault Tolerance
+## System Resilience & Fault Tolerance
 
 ✅ **1. Atomic Transactions (ACID Compliance)**
 
