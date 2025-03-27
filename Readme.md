@@ -39,7 +39,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 **Report User Feature** → Report inappropriate behavior  
 **End-to-End Encrypted Messaging** → Secure in-app chat
 
-## 📌 Core Functionalities
+## Core Functionalities
 
 ### 1️⃣ Ride Creation & Joining
 
