@@ -2,9 +2,9 @@
 
 **A smart, privacy-focused ride-sharing platform**
 
-## 📌 Project Details
+## Project Details
 
-- **👤 Developer:** Kumar Roushan
+- **👤 Na:** Kumar Roushan
 - **🎓 Roll No:** E22CSEU0798
 - **🔗 GitHub Repository:** [CarPooling MoveINSync](https://github.com/KumarRoushan9234/car_polling_MoveINSync)
 - **🚀 Live Project:** [Carma Carpool](https://carma-carpool.vercel.app/)
