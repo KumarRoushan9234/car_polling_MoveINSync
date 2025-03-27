@@ -41,7 +41,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 
 ## Core Functionalities
 
-### 1️⃣ Ride Creation & Joining
+### 1️. Ride Creation & Joining
 
 🔹 **Ride Creation:**
 
@@ -57,19 +57,19 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 3. Send a join request → Driver approves/rejects
 4. Once approved, ride details are shared
 
-### 2️⃣ Intelligent Ride Matching
+### 2️. Intelligent Ride Matching
 
 🔍 Match rides based on:  
-✅ **Proximity** (starting point closeness)  
-✅ **Route Similarity** (overlapping route)  
-✅ **Timing** (departure compatibility)  
-✅ **Preferences** (music, pet-friendly, gender, etc.)
+ **Proximity** (starting point closeness)  
+ **Route Similarity** (overlapping route)  
+ **Timing** (departure compatibility)  
+ **Preferences** (music, pet-friendly, gender, etc.)
 
-### 3️⃣ Route Matching Algorithm
+### 3. Route Matching Algorithm
 
-🚀 Uses **Google Maps API** + **Haversine Formula** to:  
-✔️ Calculate the shortest & fastest routes  
-✔️ Optimize ride matching efficiency
+    Uses **Google Maps API** + **Haversine Formula** to:
+    Calculate the shortest & fastest routes
+    Optimize ride matching efficiency
 
 ### 4️⃣ Ride Cost Calculation (Dynamic Pricing)
 
@@ -80,24 +80,24 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 
 ## System Resilience & Fault Tolerance
 
-✅ **1. Atomic Transactions (ACID Compliance)**
+    **1. Atomic Transactions (ACID Compliance)**
 
 - If any step in ride creation fails, the system **rolls back changes** to prevent data corruption.
 
-✅ **2. Circuit Breaker Pattern (For External APIs)**
+  **2. Circuit Breaker Pattern (For External APIs)**
 
 - **Auto-retries failed API requests** (e.g., Google Maps API) after a cooldown period to prevent system overload.
 
-## 📌 Trade-offs & Design Decisions
+## Trade-offs & Design Decisions
 
-🔹 **Google Maps API vs. Custom Mapping Solution**  
-✅ **Pros:** Highly accurate routes, real-time data  
-❌ **Cons:** Can be slow & expensive for high-traffic apps  
-💡 **Solution:** Caching frequently searched locations to reduce API calls
+**Google Maps API vs. Custom Mapping Solution**  
+**Pros:** Highly accurate routes, real-time data  
+**Cons:** Can be slow & expensive for high-traffic apps  
+**Solution:** Caching frequently searched locations to reduce API calls
 
-🔹 **Privacy vs. Communication Convenience**  
-✅ **Pros:** Phone number masking prevents spam  
-❌ **Cons:** Users must rely on in-app chat instead of direct calls
+**Privacy vs. Communication Convenience**  
+**Pros:** Phone number masking prevents spam  
+**Cons:** Users must rely on in-app chat instead of direct calls
 
 ## 📐 System Architecture Overview
 
