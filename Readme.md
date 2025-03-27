@@ -12,9 +12,9 @@
 ## Introduction
 
 The **Carpooling System** helps drivers and passengers connect seamlessly. It is designed to:  
- Reduce travel costs & congestion 🚦  
- Lower environmental impact 🌍  
- Ensure privacy, security, and smart ride-matching 🔒
+ Reduce travel costs & congestion  
+ Lower environmental impact  
+ Ensure privacy, security, and smart ride-matching
 
 ## 🛠 Technology Stack
 
@@ -31,7 +31,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 - MongoDB with Mongoose
 - Google Maps API (routes & recommendations)
 
-## 🔐 Privacy & Security Features
+## Privacy & Security Features
 
 **MFA Authentication** → Email & Phone Verification Required  
 **Phone Number Masking** → Hidden until ride confirmation  
@@ -43,14 +43,14 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 
 ### 1️. Ride Creation & Joining
 
-🔹 **Ride Creation:**
+**Ride Creation:**
 
 1. Enter Pickup & Drop Locations
 2. Select Departure Time & Seats
 3. Add Vehicle Details & Preferences
 4. Store Ride with Geolocation
 
-🔹 **Ride Joining:**
+**Ride Joining:**
 
 1. Search for available rides
 2. System suggests best-matching rides
@@ -59,7 +59,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 
 ### 2️. Intelligent Ride Matching
 
-🔍 Match rides based on:  
+Match rides based on:  
  **Proximity** (starting point closeness)  
  **Route Similarity** (overlapping route)  
  **Timing** (departure compatibility)  
