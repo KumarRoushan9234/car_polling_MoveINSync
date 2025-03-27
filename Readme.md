@@ -71,20 +71,20 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
     Calculate the shortest & fastest routes
     Optimize ride matching efficiency
 
-### 4️⃣ Ride Cost Calculation (Dynamic Pricing)
+### 4️. Ride Cost Calculation (Dynamic Pricing)
 
-💰 Factors affecting the fare:  
-✅ **Base Fare** (fixed initial cost)  
-✅ **Per KM Charge** (varies by city)  
-✅ **Traffic & Surge Pricing** (dynamic adjustments)
+    Factors affecting the fare:
+    **Base Fare** (fixed initial cost)
+    **Per KM Charge** (varies by city)
+    **Traffic & Surge Pricing** (dynamic adjustments)
 
 ## System Resilience & Fault Tolerance
 
     **1. Atomic Transactions (ACID Compliance)**
 
-- If any step in ride creation fails, the system **rolls back changes** to prevent data corruption.
+    - If any step in ride creation fails, the system **rolls back changes** to prevent data corruption.
 
-  **2. Circuit Breaker Pattern (For External APIs)**
+**2. Circuit Breaker Pattern (For External APIs)**
 
 - **Auto-retries failed API requests** (e.g., Google Maps API) after a cooldown period to prevent system overload.
 
@@ -99,7 +99,7 @@ The **Carpooling System** helps drivers and passengers connect seamlessly. It is
 **Pros:** Phone number masking prevents spam  
 **Cons:** Users must rely on in-app chat instead of direct calls
 
-## 📐 System Architecture Overview
+## System Architecture Overview
 
 ```mermaid
 graph TD;
